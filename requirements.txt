@@ -10,3 +10,4 @@ pillow
 python-dateutil
 QtAwesome
 lark-parser
+regex
