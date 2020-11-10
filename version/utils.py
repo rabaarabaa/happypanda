@@ -39,6 +39,7 @@ from PIL import Image, ImageChops
 
 from . import app_constants
 from .database import db_constants
+
 if TYPE_CHECKING:
     from . import gallerydb
 
@@ -1394,3 +1395,20 @@ def lookup_tag(tag: str) -> None:
     url += 'tag/' + tag
 
     open_web_link(url)
+
+
+def normalize_spaces(s: str, sep: Union[str, re.Pattern] = re.compile(r"\s+"), space: str = " ",
+                     trim: bool = True) -> str:
+    if isinstance(sep, str):
+        sep = re.compile(sep)
+
+    if trim:
+        s_pat = sep.pattern
+        begin_pat = re.compile('^' + s_pat)
+        end_pat = re.compile(s_pat + '$')
+        s_trimmed = end_pat.sub('', begin_pat.sub('', s))
+    else:
+        s_trimmed = s
+
+    s_2 = sep.split(s_trimmed)
+    return space.join(s_2)
