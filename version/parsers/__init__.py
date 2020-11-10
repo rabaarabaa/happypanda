@@ -1,0 +1,15 @@
+import os
+
+from lark.lark import Lark
+
+PARSERS_FOLDER = os.path.dirname(__file__)
+LARK_GRAMMARS_FOLDER = os.path.join(PARSERS_FOLDER, 'grammars')
+
+
+def load_lark_grammar(filename, **options):
+    fp = os.path.join(LARK_GRAMMARS_FOLDER, filename)
+    if not os.path.isfile(fp):
+        raise FileNotFoundError("Grammar '{}' does not exist in version/parsers/grammars folder.".format(filename))
+
+    with open(filename) as f:
+        return Lark(f, **options)

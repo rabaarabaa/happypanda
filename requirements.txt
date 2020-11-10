@@ -9,3 +9,4 @@ Send2Trash
 pillow
 python-dateutil
 QtAwesome
+lark-parser
