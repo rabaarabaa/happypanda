@@ -3,20 +3,12 @@ import logging
 from pprint import pformat
 from typing import ClassVar
 
-try:
-    from app_constants import DOWNLOAD_TYPE_OTHER, VALID_GALLERY_CATEGORY
-    from pewnet import (
-        DLManager as DLManagerObject,
-        Downloader as DownloaderObject,
-        HenItem,
-    )
-except ImportError:
-    from .app_constants import DOWNLOAD_TYPE_OTHER, VALID_GALLERY_CATEGORY
-    from .pewnet import (
-        DLManager as DLManagerObject,
-        Downloader as DownloaderObject,
-        HenItem,
-    )
+from .app_constants import DOWNLOAD_TYPE_OTHER, VALID_GALLERY_CATEGORY
+from .pewnet import (
+    DLManager as DLManagerObject,
+    Downloader as DownloaderObject,
+    HenItem,
+)
 
 log = logging.getLogger(__name__)
 """:class:`logging.Logger`: Logger for module."""
