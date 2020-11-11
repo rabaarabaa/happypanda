@@ -1,0 +1,50 @@
+// This file is part of Happypanda.
+// Happypanda is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// any later version.
+// Happypanda is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with Happypanda.  If not, see <http://www.gnu.org/licenses/>.
+
+?start: default_case
+      | artist_case
+      | fallback_case
+
+default_case: t_paren_strict{"(", ")"}? circle_plus_artist title _any_item*
+title: double_title | STRING*
+double_title.2: STRING* TK_SEPARATOR STRING*
+
+_any_item: t_paren_strict{"{", "}"} // might be changed in the future with t_paren_item
+         | t_paren_strict{"(", ")"}
+         | t_paren_strict{"[", "]"}
+         | t_paren_strict{"<", ">"} 
+
+t_paren_strict{lparen, rparen}: lparen STRING* rparen
+t_paren_malformed{lparen}: lparen STRING*
+//t_paren_item{lparen, rparen}: t_paren_strict{lparen, rparen}
+//                            | lparen STRING
+
+//proxy_circle_plus_artist: circle_plus_artist | t_paren_malformed{"["} | t_paren_strict{"[", "]"}
+circle_plus_artist: "[" STRING* t_paren_strict{"(", ")"} "]"?
+                  | "[" STRING* t_paren_malformed{"("} "]"?
+                  
+// convention: t_paren_strict{"(", ")"}
+artist_case: STRING* TK_ARTIST STRING*
+fallback_case: (RAW_STRING | _any_item)*
+
+unit: STRING*
+
+STRING: /[^\|\s\(\)\[\]\{\}\<\>]+/
+
+RAW_STRING: /[^\s\(\)\[\]\{\}\<\>]+/ // basically STRING but includes pipe '|'
+
+TK_ARTIST: "artist"i
+TK_SEPARATOR: "|"
+
+%import common.WS
+%ignore WS
+
