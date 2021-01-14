@@ -1,3 +1,4 @@
+# On indefinite hiatus
 
 I don't promise anything, I picked this up because I like the program.
 Right now I'm trying to type hint the codebase while refactoring, there
